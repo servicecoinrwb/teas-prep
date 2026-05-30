@@ -47,7 +47,26 @@ nav.tabs button:hover{color:var(--ink)}
 nav.tabs button.active{background:var(--ink);color:var(--paper)}
 .card{background:#FFFDF8;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:620px){.grid{grid-template-columns:1fr}.wrap{padding:20px 14px 70px}}
+@media(max-width:620px){
+  .grid{grid-template-columns:1fr}
+  .wrap{padding:18px 13px 64px}
+  .brand{font-size:25px}
+  .sub{font-size:13.5px}
+  nav.tabs{gap:5px;margin:18px 0 22px}
+  nav.tabs button{padding:7px 13px;font-size:13px}
+  .card{padding:17px;border-radius:15px}
+  .intro .lead,.qtext{font-size:18px}
+  .bigscore{font-size:52px}
+  /* full-width tappable buttons in the quiz footer */
+  .qfoot{flex-direction:column;align-items:stretch}
+  .qfoot .row{flex-direction:column;align-items:stretch}
+  .qfoot .btn{width:100%;text-align:center;padding:13px}
+  .opt{padding:14px 14px;font-size:15px}
+  .chat{max-height:46vh}
+  .header-pill-wrap{width:100%}
+  #streakPill{font-size:11.5px}
+  .fib input{width:100%}
+}
 .sec-card{position:relative;overflow:hidden}
 .sec-card .bar{height:4px;border-radius:999px;width:46px;margin-bottom:14px}
 .sec-card h3{font-family:'Fraunces',serif;font-weight:600;font-size:22px;letter-spacing:-.3px}
@@ -119,7 +138,7 @@ nav.tabs button.active{background:var(--ink);color:var(--paper)}
 .msg.bot{align-self:flex-start;background:var(--paper-2);border:1px solid var(--line);border-bottom-left-radius:5px}
 .msg.sys{align-self:center;font-size:12.5px;color:var(--ink-soft);background:transparent;text-align:center;max-width:100%}
 .chatbar{display:flex;gap:8px}
-.chatbar input{flex:1;font-family:inherit;font-size:15px;padding:12px 15px;border:1px solid var(--line);border-radius:12px;background:#FFFDF8}
+.chatbar input{flex:1;font-family:inherit;font-size:16px;padding:12px 15px;border:1px solid var(--line);border-radius:12px;background:#FFFDF8}
 .chatbar input:focus{outline:none;border-color:var(--sage)}
 .tip{font-size:12.5px;color:var(--ink-soft);margin-top:10px}
 .loading{display:inline-block}
@@ -246,7 +265,7 @@ footer.foot{text-align:center;color:var(--ink-soft);font-size:12px;margin-top:34
    To host elsewhere (e.g. GitHub Pages), point this at your
    own proxy (Cloudflare Worker, etc.) that adds the API key.
    ============================================================ */
-const AI_ENDPOINT = "https://teas-prep.summer-unit-44dd.workers.dev";
+const AI_ENDPOINT = "https://api.anthropic.com/v1/messages";
 const AI_MODEL = "claude-sonnet-4-20250514";
 
 /* Required passing score for her program */
