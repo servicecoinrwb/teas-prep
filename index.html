@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEAS 7 Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F1E7;
+  --paper-2:#EFE8D9;
+  --ink:#1B2A2C;
+  --ink-soft:#42514F;
+  --sage:#2F6B5E;
+  --sage-deep:#234F46;
+  --terra:#C16A47;
+  --correct:#3E7C5A;
+  --wrong:#B14A35;
+  --line:#D8CFBC;
+  --shadow:0 1px 2px rgba(27,42,44,.06),0 10px 30px rgba(27,42,44,.07);
+  --shadow-lg:0 20px 60px rgba(27,42,44,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Public Sans',system-ui,sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 12% 8%,rgba(47,107,94,.05),transparent 40%),radial-gradient(circle at 88% 92%,rgba(193,106,71,.05),transparent 42%);
+}
+.wrap{max-width:880px;margin:0 auto;padding:28px 22px 80px}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.brand{font-family:'Fraunces',serif;font-weight:600;font-size:30px;letter-spacing:-.5px;color:var(--ink)}
+.brand .dot{color:var(--terra)}
+.sub{color:var(--ink-soft);font-size:14px;max-width:520px}
+nav.tabs{display:flex;gap:6px;margin:22px 0 26px;flex-wrap:wrap}
+nav.tabs button{
+  font-family:inherit;font-size:14px;font-weight:600;color:var(--ink-soft);
+  background:transparent;border:1px solid transparent;border-radius:999px;
+  padding:8px 16px;cursor:pointer;transition:.18s;
+}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button.active{background:var(--ink);color:var(--paper)}
+.card{background:#FFFDF8;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.wrap{padding:20px 14px 70px}}
+.sec-card{position:relative;overflow:hidden}
+.sec-card .bar{height:4px;border-radius:999px;width:46px;margin-bottom:14px}
+.sec-card h3{font-family:'Fraunces',serif;font-weight:600;font-size:22px;letter-spacing:-.3px}
+.sec-card .meta{font-size:13px;color:var(--ink-soft);margin:6px 0 16px}
+.sec-card .meta b{color:var(--ink);font-weight:600}
+.btn{font-family:inherit;font-weight:600;font-size:14px;border-radius:11px;padding:10px 16px;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--paper);transition:.16s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--paper-2)}
+.btn.sage{background:var(--sage);border-color:var(--sage)}
+.btn.sm{padding:7px 13px;font-size:13px;border-radius:9px}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.intro{margin-bottom:24px}
+.intro .lead{font-family:'Fraunces',serif;font-size:21px;font-weight:500;line-height:1.4;letter-spacing:-.3px;margin-bottom:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--ink-soft)}
+.divider{height:1px;background:var(--line);margin:26px 0}
+/* quiz */
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.qmeta{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--sage)}
+.progress{height:7px;background:var(--paper-2);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--sage),var(--sage-deep));transition:width .35s}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;color:var(--ink)}
+.timer.low{color:var(--wrong)}
+.passage{background:var(--paper-2);border-left:3px solid var(--sage);border-radius:0 12px 12px 0;padding:14px 16px;font-size:15px;margin:14px 0 18px;color:var(--ink-soft)}
+.qtext{font-family:'Fraunces',serif;font-size:22px;font-weight:500;line-height:1.4;letter-spacing:-.3px;margin:8px 0 18px}
+.qtype-note{font-size:12.5px;color:var(--terra);font-weight:600;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);background:#FFFDF8;border-radius:12px;padding:13px 15px;cursor:pointer;transition:.14s;font-size:15px}
+.opt:hover{border-color:var(--sage);background:#fff}
+.opt .key{flex:none;width:24px;height:24px;border-radius:7px;background:var(--paper-2);border:1px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--ink-soft)}
+.opt.sel{border-color:var(--sage);background:rgba(47,107,94,.07)}
+.opt.sel .key{background:var(--sage);color:#fff;border-color:var(--sage)}
+.opt.correct{border-color:var(--correct);background:rgba(62,124,90,.1)}
+.opt.correct .key{background:var(--correct);color:#fff;border-color:var(--correct)}
+.opt.wrong{border-color:var(--wrong);background:rgba(177,74,53,.08)}
+.opt.wrong .key{background:var(--wrong);color:#fff;border-color:var(--wrong)}
+.opt.locked{cursor:default}
+.fib input{font-family:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;width:200px;max-width:100%;background:#FFFDF8}
+.fib input:focus{outline:none;border-color:var(--sage)}
+.explain{margin-top:18px;border-radius:13px;padding:15px 17px;font-size:14.5px;line-height:1.6;border:1px solid var(--line)}
+.explain.ok{background:rgba(62,124,90,.08);border-color:rgba(62,124,90,.4)}
+.explain.no{background:rgba(177,74,53,.06);border-color:rgba(177,74,53,.35)}
+.explain .verdict{font-weight:700;font-family:'Fraunces',serif;font-size:16px;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.explain.ok .verdict{color:var(--correct)}
+.explain.no .verdict{color:var(--wrong)}
+.qfoot{display:flex;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}
+/* results */
+.score-ring{display:grid;place-items:center;margin:6px auto 18px}
+.bigscore{font-family:'Fraunces',serif;font-size:64px;font-weight:600;line-height:1;letter-spacing:-2px}
+.scorelabel{text-align:center;color:var(--ink-soft);font-size:14px;margin-bottom:6px}
+.breakrow{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.breakrow:last-child{border-bottom:none}
+.breakrow .lab{font-weight:600}
+.minibar{flex:1;height:8px;background:var(--paper-2);border-radius:999px;margin:0 14px;overflow:hidden;border:1px solid var(--line)}
+.minibar > i{display:block;height:100%;border-radius:999px}
+/* reference */
+.ref h4{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin:20px 0 8px;color:var(--sage-deep)}
+.ref h4:first-child{margin-top:4px}
+.ref ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.ref li{font-size:14.5px;padding-left:18px;position:relative;color:var(--ink-soft)}
+.ref li:before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--terra)}
+.ref li b{color:var(--ink);font-weight:600}
+.ref code{background:var(--paper-2);padding:1px 7px;border-radius:6px;font-size:13.5px;font-family:ui-monospace,monospace;color:var(--sage-deep)}
+/* tutor */
+.chat{display:flex;flex-direction:column;gap:12px;max-height:380px;overflow-y:auto;padding:4px 2px 4px 0;margin-bottom:14px}
+.msg{padding:11px 15px;border-radius:14px;font-size:14.5px;line-height:1.55;max-width:88%;white-space:pre-wrap}
+.msg.you{align-self:flex-end;background:var(--ink);color:var(--paper);border-bottom-right-radius:5px}
+.msg.bot{align-self:flex-start;background:var(--paper-2);border:1px solid var(--line);border-bottom-left-radius:5px}
+.msg.sys{align-self:center;font-size:12.5px;color:var(--ink-soft);background:transparent;text-align:center;max-width:100%}
+.chatbar{display:flex;gap:8px}
+.chatbar input{flex:1;font-family:inherit;font-size:15px;padding:12px 15px;border:1px solid var(--line);border-radius:12px;background:#FFFDF8}
+.chatbar input:focus{outline:none;border-color:var(--sage)}
+.tip{font-size:12.5px;color:var(--ink-soft);margin-top:10px}
+.loading{display:inline-block}
+.loading:after{content:"";animation:dots 1.4s infinite}
+@keyframes dots{0%,20%{content:"."}40%{content:".."}60%,100%{content:"..."}}
+.hide{display:none!important}
+.fade{animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+footer.foot{text-align:center;color:var(--ink-soft);font-size:12px;margin-top:34px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand">Pass the TEAS<span class="dot">.</span></div>
+      <div class="sub">A focused study companion for the ATI TEAS 7 — Reading, Math, Science, and English &amp; Language Usage.</div>
+    </div>
+    <span class="pill" id="streakPill">Session score: 0 / 0</span>
+  </header>
+
+  <nav class="tabs">
+    <button data-tab="home" class="active">Practice</button>
+    <button data-tab="reference">Cheat Sheet</button>
+    <button data-tab="tutor">AI Tutor</button>
+    <button data-tab="plan">Study Plan</button>
+  </nav>
+
+  <!-- HOME -->
+  <section id="tab-home">
+    <div class="intro">
+      <div class="lead">Pick a section to drill, or run a timed mixed set the way the real exam feels.</div>
+      <div class="row">
+        <span class="pill">170 questions • 209 min on test day</span>
+        <span class="pill">ATI suggests ~6 weeks of prep</span>
+      </div>
+    </div>
+    <div class="grid" id="sectionGrid"></div>
+    <div class="divider"></div>
+    <div class="card row" style="justify-content:space-between">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:19px;font-weight:600">Mixed mock round</div>
+        <div class="sub" style="margin-top:3px">20 questions across all four sections, timed. Closest to the real thing.</div>
+      </div>
+      <button class="btn sage" onclick="startQuiz('ALL',20,true)">Start timed round</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="tab-quiz" class="hide">
+    <div class="card fade">
+      <div class="qhead">
+        <span class="qmeta" id="qSection">Reading</span>
+        <span class="timer hide" id="qTimer">00:00</span>
+      </div>
+      <div class="progress"><i id="qProg" style="width:0%"></i></div>
+      <div id="qPassage" class="passage hide"></div>
+      <div id="qType" class="qtype-note hide"></div>
+      <div class="qtext" id="qText">…</div>
+      <div class="opts" id="qOpts"></div>
+      <div id="qExplain"></div>
+      <div class="qfoot">
+        <button class="btn ghost sm" onclick="quitQuiz()">← Exit</button>
+        <div class="row">
+          <button class="btn" id="checkBtn" onclick="checkAnswer()">Check answer</button>
+          <button class="btn sage hide" id="nextBtn" onclick="nextQuestion()">Next →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="tab-results" class="hide">
+    <div class="card fade" style="text-align:center">
+      <div class="scorelabel">Round complete</div>
+      <div class="bigscore" id="rScore">0%</div>
+      <div class="scorelabel" id="rSub">0 of 0 correct</div>
+      <div class="divider"></div>
+      <div id="rBreak" style="text-align:left"></div>
+      <div id="rAdvice" class="explain ok" style="text-align:left;margin-top:20px"></div>
+      <div class="row" style="justify-content:center;margin-top:22px">
+        <button class="btn ghost" onclick="go('home')">Back to sections</button>
+        <button class="btn sage" id="retryBtn">Try another round</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERENCE -->
+  <section id="tab-reference" class="hide">
+    <div class="card ref fade" id="refContent"></div>
+  </section>
+
+  <!-- TUTOR -->
+  <section id="tab-tutor" class="hide">
+    <div class="card fade">
+      <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:4px">AI Tutor</div>
+      <div class="sub" style="margin-bottom:16px">Ask anything — "explain mitosis simply", "quiz me on dosage math", "what's the difference between affect and effect". The tutor can also generate fresh practice questions.</div>
+      <div class="chat" id="chat">
+        <div class="msg sys">The tutor is ready. Try a question below.</div>
+      </div>
+      <div class="chatbar">
+        <input id="chatInput" placeholder="Ask the tutor…" onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="btn" id="sendBtn" onclick="sendChat()">Send</button>
+      </div>
+      <div class="tip" id="tutorTip"></div>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section id="tab-plan" class="hide">
+    <div class="card fade ref" id="planContent"></div>
+  </section>
+
+  <footer class="foot">
+    Built for the ATI TEAS 7 (current version). Section counts &amp; timing reflect the real exam.<br>
+    Practice tool — not affiliated with or endorsed by ATI. Good luck. You've got this.
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — AI tutor / question generation
+   In the Claude artifact runtime this works with no key.
+   To host elsewhere (e.g. GitHub Pages), point this at your
+   own proxy (Cloudflare Worker, etc.) that adds the API key.
+   ============================================================ */
+const AI_ENDPOINT = "https://api.anthropic.com/v1/messages";
+const AI_MODEL = "claude-sonnet-4-20250514";
+
+/* Required passing score for her program */
+const TARGET = 80;
+
+/* ============================================================
+   QUESTION BANK
+   ============================================================ */
+const BANK = [
+/* ---------- READING ---------- */
+{s:"Reading",sub:"Key Ideas & Details",type:"mc",
+ passage:"Hand hygiene is the single most effective way to prevent the spread of infection in healthcare settings. Studies consistently show that proper handwashing—or the use of alcohol-based sanitizer when hands are not visibly soiled—dramatically reduces the transmission of pathogens between patients and staff. Despite this, compliance rates among healthcare workers often fall below 50 percent.",
+ q:"What is the main idea of the passage?",
+ opts:["Alcohol sanitizer should never be used in hospitals","Hand hygiene effectively prevents infection but is often underused","Healthcare workers wash their hands more than 50 percent of the time","Pathogens cannot be transmitted between patients"],
+ a:1,
+ ex:"The passage states hand hygiene is the most effective prevention method, yet compliance is below 50%. That tension—effective but underused—is the main idea. The other options contradict the text."},
+
+{s:"Reading",sub:"Craft & Structure",type:"mc",
+ passage:"The new policy was met with palpable resistance from the night-shift staff, who felt the changes had been imposed without their input.",
+ q:"As used in the sentence, 'palpable' most nearly means:",
+ opts:["Easily noticeable","Quietly hidden","Legally binding","Temporary"],
+ a:0,
+ ex:"'Palpable' means so intense it can almost be felt or clearly perceived. Context ('resistance... who felt') points to resistance that was obvious and strongly felt."},
+
+{s:"Reading",sub:"Integration of Knowledge",type:"mc",
+ passage:"A nurse records a patient's temperature every two hours: 8 AM = 99.1°F, 10 AM = 100.2°F, 12 PM = 101.0°F, 2 PM = 101.8°F.",
+ q:"Based on the data, what trend is occurring?",
+ opts:["Temperature is steadily decreasing","Temperature is steadily increasing","Temperature stays constant","Temperature fluctuates randomly"],
+ a:1,
+ ex:"Each reading is higher than the one before (99.1 → 100.2 → 101.0 → 101.8). That is a steady increase. Reading data trends is a common TEAS skill."},
+
+{s:"Reading",sub:"Key Ideas & Details",type:"mc",
+ passage:"To take an oral temperature: 1) Turn on the thermometer. 2) Place the tip under the tongue. 3) Ask the patient to close their lips. 4) Wait for the beep. 5) Read and record the result.",
+ q:"According to the directions, what should be done immediately after placing the tip under the tongue?",
+ opts:["Turn on the thermometer","Read the result","Ask the patient to close their lips","Wait for the beep"],
+ a:2,
+ ex:"Following sequenced directions is a TEAS skill. Step 2 is placing the tip; step 3 (the next action) is asking the patient to close their lips."},
+
+{s:"Reading",sub:"Craft & Structure",type:"mc",
+ passage:"Editorial: 'The hospital board claims the budget cuts are unavoidable. But they have not explained why administrator salaries rose 12 percent in the same year. Patients deserve transparency, not excuses.'",
+ q:"What is the author's primary purpose?",
+ opts:["To describe a medical procedure","To persuade readers that the board is being misleading","To entertain readers with a story","To give neutral, unbiased facts"],
+ a:1,
+ ex:"The loaded language ('excuses,' 'deserve transparency') and the challenge to the board's claim signal a persuasive purpose, not neutral reporting."},
+
+{s:"Reading",sub:"Integration of Knowledge",type:"mc",
+ passage:"Claim: 'Everyone should drink eight glasses of water a day because my doctor said so.'",
+ q:"What is the main weakness of this argument?",
+ opts:["It relies on a single authority without supporting evidence","It uses too many statistics","It is too long","It cites multiple scientific studies"],
+ a:0,
+ ex:"The argument rests only on one person's say-so ('my doctor said so') with no evidence—an appeal to authority. Evaluating argument strength is tested on the TEAS."},
+
+/* ---------- MATH ---------- */
+{s:"Math",sub:"Numbers & Algebra",type:"mc",
+ q:"What is 3/4 + 1/6?",
+ opts:["4/10","11/12","7/12","5/6"],
+ a:1,
+ ex:"Common denominator is 12. 3/4 = 9/12 and 1/6 = 2/12. 9/12 + 2/12 = 11/12."},
+
+{s:"Math",sub:"Numbers & Algebra",type:"mc",
+ q:"A patient's bill is $480. With a 15% discount, what is the new total?",
+ opts:["$72","$408","$465","$420"],
+ a:1,
+ ex:"15% of 480 = 0.15 × 480 = 72. Subtract from the original: 480 − 72 = $408."},
+
+{s:"Math",sub:"Numbers & Algebra",type:"mc",
+ q:"A medication is dosed at 5 mg for every 10 kg of body weight. How many mg should a 70 kg patient receive?",
+ opts:["35 mg","14 mg","50 mg","70 mg"],
+ a:0,
+ ex:"Set up a proportion: 5 mg / 10 kg = x / 70 kg. Cross-multiply: 10x = 350, so x = 35 mg. Dosage proportions are heavily tested."},
+
+{s:"Math",sub:"Numbers & Algebra",type:"mc",
+ q:"Solve for x: 4x − 7 = 21",
+ opts:["x = 3.5","x = 7","x = 14","x = 5.25"],
+ a:1,
+ ex:"Add 7 to both sides: 4x = 28. Divide by 4: x = 7."},
+
+{s:"Math",sub:"Measurement & Data",type:"mc",
+ q:"Convert 2.5 liters to milliliters.",
+ opts:["25 mL","250 mL","2,500 mL","0.0025 mL"],
+ a:2,
+ ex:"1 liter = 1,000 mL, so multiply: 2.5 × 1,000 = 2,500 mL. Metric conversions move the decimal by powers of ten."},
+
+{s:"Math",sub:"Measurement & Data",type:"mc",
+ q:"A rectangular bandage is 8 cm long and 3 cm wide. What is its area?",
+ opts:["11 cm²","24 cm²","22 cm²","16 cm²"],
+ a:1,
+ ex:"Area of a rectangle = length × width = 8 × 3 = 24 cm². (Perimeter would be 22 cm — a common distractor.)"},
+
+{s:"Math",sub:"Measurement & Data",type:"mc",
+ q:"A patient's recorded weights (in kg) over four visits are 80, 82, 79, 83. What is the mean weight?",
+ opts:["80 kg","81 kg","82 kg","81.5 kg"],
+ a:1,
+ ex:"Mean = sum ÷ count. (80 + 82 + 79 + 83) = 324; 324 ÷ 4 = 81 kg."},
+
+{s:"Math",sub:"Numbers & Algebra",type:"fib",
+ q:"Write 0.6 as a fraction in simplest form. (Type like 3/5)",
+ a:"3/5",
+ accept:["3/5"],
+ ex:"0.6 = 6/10. Divide top and bottom by 2: 3/5. Fill-in-the-blank items appear on the TEAS."},
+
+/* ---------- SCIENCE ---------- */
+{s:"Science",sub:"Anatomy & Physiology",type:"mc",
+ q:"Which organelle is primarily responsible for producing energy (ATP) in the cell?",
+ opts:["Nucleus","Ribosome","Mitochondria","Golgi apparatus"],
+ a:2,
+ ex:"The mitochondrion is the 'powerhouse of the cell,' producing ATP through cellular respiration. Organelle function is a frequent TEAS science topic."},
+
+{s:"Science",sub:"Anatomy & Physiology",type:"mc",
+ q:"Which chamber of the heart pumps oxygenated blood out to the entire body?",
+ opts:["Right atrium","Right ventricle","Left atrium","Left ventricle"],
+ a:3,
+ ex:"The left ventricle is the most muscular chamber; it pumps oxygen-rich blood into the aorta and out to the body. The right ventricle sends blood to the lungs."},
+
+{s:"Science",sub:"Anatomy & Physiology",type:"mc",
+ q:"Gas exchange between the lungs and blood occurs in the:",
+ opts:["Bronchi","Trachea","Alveoli","Pharynx"],
+ a:2,
+ ex:"Alveoli are tiny air sacs with thin walls where oxygen and carbon dioxide diffuse between air and blood. The trachea and bronchi only conduct air."},
+
+{s:"Science",sub:"Chemistry",type:"mc",
+ q:"A solution with a pH of 3 is best described as:",
+ opts:["Strongly basic","Neutral","Acidic","Saline"],
+ a:2,
+ ex:"The pH scale runs 0–14; 7 is neutral. Below 7 is acidic, above 7 is basic. A pH of 3 is acidic. (Lower number = more acidic.)"},
+
+{s:"Science",sub:"Biology",type:"mc",
+ q:"Which macromolecule is the body's primary, fastest source of energy?",
+ opts:["Proteins","Carbohydrates","Nucleic acids","Lipids"],
+ a:1,
+ ex:"Carbohydrates (broken down into glucose) are the body's quickest energy source. Lipids store more energy long-term but release it more slowly."},
+
+{s:"Science",sub:"Chemistry",type:"mc",
+ q:"The atomic number of an element is determined by the number of:",
+ opts:["Neutrons","Protons","Electrons","Protons plus neutrons"],
+ a:1,
+ ex:"Atomic number = number of protons, which defines the element. Protons + neutrons gives the mass number instead."},
+
+{s:"Science",sub:"Scientific Reasoning",type:"mc",
+ q:"In an experiment testing whether a drug lowers blood pressure, the dose of the drug is the:",
+ opts:["Dependent variable","Independent variable","Control group","Constant"],
+ a:1,
+ ex:"The independent variable is what the researcher changes (the dose). The dependent variable is what is measured in response (blood pressure)."},
+
+{s:"Science",sub:"Anatomy & Physiology",type:"mc",
+ q:"Negative feedback that keeps body temperature near 98.6°F is an example of:",
+ opts:["Metabolism","Homeostasis","Diffusion","Mitosis"],
+ a:1,
+ ex:"Homeostasis is the body's maintenance of a stable internal environment, often via negative feedback loops like temperature regulation."},
+
+{s:"Science",sub:"Biology",type:"sata",
+ q:"Select ALL of the following that are part of a prokaryotic cell.",
+ opts:["Cell membrane","Nucleus","Ribosomes","Cytoplasm"],
+ a:[0,2,3],
+ ex:"Prokaryotes (like bacteria) have a cell membrane, ribosomes, and cytoplasm but NO membrane-bound nucleus. 'Select all that apply' items are scored all-or-nothing on the TEAS."},
+
+/* ---------- ENGLISH & LANGUAGE USAGE ---------- */
+{s:"English & Language Usage",sub:"Conventions",type:"mc",
+ q:"Choose the grammatically correct sentence.",
+ opts:["The team of nurses are ready.","The team of nurses is ready.","The team of nurses were ready.","The team of nurses be ready."],
+ a:1,
+ ex:"'Team' is a singular collective noun, so it takes a singular verb: 'is.' The phrase 'of nurses' doesn't change the subject's number."},
+
+{s:"English & Language Usage",sub:"Conventions",type:"mc",
+ q:"Which sentence uses punctuation correctly?",
+ opts:["I finished my shift, I went home.","I finished my shift; I went home.","I finished my shift I went home.","I finished my shift: I went home."],
+ a:1,
+ ex:"Two independent clauses can be joined with a semicolon. Option A is a comma splice; C is a run-on; a colon (D) isn't appropriate here."},
+
+{s:"English & Language Usage",sub:"Conventions",type:"mc",
+ q:"Choose the correct word: 'The patient left ___ chart at the desk.'",
+ opts:["they're","their","there","theyre"],
+ a:1,
+ ex:"'Their' shows possession (the chart belongs to the patient). 'They're' = they are; 'there' = a place."},
+
+{s:"English & Language Usage",sub:"Vocabulary",type:"mc",
+ q:"The prefix 'hyper-' (as in hypertension) means:",
+ opts:["Below or under","Excessive or over","Around","Without"],
+ a:1,
+ ex:"'Hyper-' means excessive/over — hypertension is high blood pressure. The opposite, 'hypo-,' means below/under (hypotension = low pressure)."},
+
+{s:"English & Language Usage",sub:"Knowledge of Language",type:"mc",
+ q:"Which is the most appropriate sentence for a formal patient report?",
+ opts:["The patient was super out of it.","The patient appeared disoriented and lethargic.","The patient was kinda confused, I guess.","The dude seemed off."],
+ a:1,
+ ex:"Formal clinical writing uses precise, professional vocabulary. 'Appeared disoriented and lethargic' fits; the others are informal or vague."},
+
+{s:"English & Language Usage",sub:"Vocabulary",type:"mc",
+ q:"Choose the correct word: 'The medication did not ___ her recovery.'",
+ opts:["affect","effect","afect","effekt"],
+ a:0,
+ ex:"'Affect' is usually a verb meaning to influence. 'Effect' is usually a noun meaning a result. Here you need the verb: affect."},
+
+{s:"English & Language Usage",sub:"Conventions",type:"mc",
+ q:"Which option corrects this fragment: 'Because the alarm sounded.'",
+ opts:["Because the alarm sounded.","The alarm sounded, the nurse responded quickly.","Because the alarm sounded, the nurse responded quickly.","The alarm. It sounded."],
+ a:2,
+ ex:"A subordinate clause ('Because…') can't stand alone. Attaching an independent clause completes it: 'Because the alarm sounded, the nurse responded quickly.'"}
+];
+
+/* ============================================================
+   SECTION META (real exam numbers)
+   ============================================================ */
+const SECTIONS = [
+  {name:"Reading", color:"#2F6B5E", q:45, t:55, note:"Main ideas, author's purpose, word meaning, interpreting graphics."},
+  {name:"Math", color:"#C16A47", q:38, t:57, note:"Fractions, percents, ratios/dosage, algebra, conversions, data."},
+  {name:"Science", color:"#3E7C5A", q:50, t:60, note:"Anatomy & physiology (the big one), biology, chemistry, reasoning."},
+  {name:"English & Language Usage", color:"#7A5C9E", q:37, t:37, note:"Grammar, punctuation, sentence structure, vocabulary, roots/affixes."}
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let quiz=null; // {items, idx, answers[], section, timed, timeLeft, timerId, selected}
+let session={correct:0,total:0};
+let chatHistory=[];
+
+/* ============================================================
+   NAV
+   ============================================================ */
+function go(tab){
+  document.querySelectorAll('section[id^="tab-"]').forEach(s=>s.classList.add('hide'));
+  document.getElementById('tab-'+tab).classList.remove('hide');
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+}
+document.querySelectorAll('nav.tabs button').forEach(b=>{
+  b.onclick=()=>{ if(quiz && b.dataset.tab!=='quiz'){quiz=null; clearTimer();} go(b.dataset.tab); };
+});
+
+/* ============================================================
+   HOME / SECTION CARDS
+   ============================================================ */
+function renderSections(){
+  const grid=document.getElementById('sectionGrid');
+  grid.innerHTML='';
+  SECTIONS.forEach(sec=>{
+    const count=BANK.filter(x=>x.s===sec.name).length;
+    const div=document.createElement('div');
+    div.className='card sec-card';
+    div.innerHTML=`
+      <div class="bar" style="background:${sec.color}"></div>
+      <h3>${sec.name}</h3>
+      <div class="meta">Real exam: <b>${sec.q} questions</b> · <b>${sec.t} min</b><br>${sec.note}</div>
+      <div class="row">
+        <button class="btn sm" onclick="startQuiz('${sec.name}',${count},false)">Practice (${count})</button>
+        <button class="btn ghost sm" onclick="startQuiz('${sec.name}',${count},true)">Timed</button>
+      </div>`;
+    grid.appendChild(div);
+  });
+}
+
+/* ============================================================
+   QUIZ ENGINE
+   ============================================================ */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startQuiz(section, n, timed){
+  let pool = section==='ALL' ? BANK : BANK.filter(x=>x.s===section);
+  pool = shuffle(pool).slice(0, n||pool.length);
+  if(!pool.length){alert('No questions found.');return;}
+  quiz={items:pool, idx:0, answers:[], section, timed, selected:null, checked:false};
+  if(timed){
+    // ~50 sec per question, scaled from real per-question pacing
+    quiz.timeLeft = pool.length*50;
+    startTimer();
+    document.getElementById('qTimer').classList.remove('hide');
+  } else {
+    document.getElementById('qTimer').classList.add('hide');
+    clearTimer();
+  }
+  go('quiz');
+  renderQuestion();
+}
+
+function startTimer(){
+  clearTimer();
+  const el=document.getElementById('qTimer');
+  const tick=()=>{
+    if(!quiz)return;
+    const m=Math.floor(quiz.timeLeft/60), s=quiz.timeLeft%60;
+    el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.classList.toggle('low', quiz.timeLeft<=30);
+    if(quiz.timeLeft<=0){clearTimer(); finishQuiz();}
+    quiz.timeLeft--;
+  };
+  tick();
+  quiz.timerId=setInterval(tick,1000);
+}
+function clearTimer(){ if(quiz&&quiz.timerId){clearInterval(quiz.timerId);quiz.timerId=null;} }
+
+function renderQuestion(){
+  const it=quiz.items[quiz.idx];
+  quiz.selected = it.type==='sata' ? [] : null;
+  quiz.checked=false;
+  document.getElementById('qSection').textContent=`${it.s} · ${it.sub}`;
+  document.getElementById('qProg').style.width=((quiz.idx)/quiz.items.length*100)+'%';
+
+  const pass=document.getElementById('qPassage');
+  if(it.passage){pass.textContent=it.passage;pass.classList.remove('hide');}else pass.classList.add('hide');
+
+  const typeNote=document.getElementById('qType');
+  if(it.type==='sata'){typeNote.textContent='Select ALL that apply';typeNote.classList.remove('hide');}
+  else if(it.type==='fib'){typeNote.textContent='Fill in the blank';typeNote.classList.remove('hide');}
+  else typeNote.classList.add('hide');
+
+  document.getElementById('qText').textContent=it.q;
+  const opts=document.getElementById('qOpts');
+  opts.innerHTML='';
+
+  if(it.type==='fib'){
+    opts.className='opts fib';
+    opts.innerHTML=`<input id="fibInput" placeholder="Your answer" onkeydown="if(event.key==='Enter')checkAnswer()">`;
+  } else {
+    opts.className='opts';
+    const keys=['A','B','C','D','E','F'];
+    it.opts.forEach((o,i)=>{
+      const d=document.createElement('div');
+      d.className='opt';d.dataset.i=i;
+      d.innerHTML=`<span class="key">${keys[i]}</span><span>${o}</span>`;
+      d.onclick=()=>selectOpt(i,it.type);
+      opts.appendChild(d);
+    });
+  }
+  document.getElementById('qExplain').innerHTML='';
+  document.getElementById('checkBtn').classList.remove('hide');
+  document.getElementById('checkBtn').disabled=false;
+  document.getElementById('nextBtn').classList.add('hide');
+  document.getElementById('tab-quiz').querySelector('.card').classList.remove('fade');
+  void document.getElementById('tab-quiz').querySelector('.card').offsetWidth;
+  document.getElementById('tab-quiz').querySelector('.card').classList.add('fade');
+}
+
+function selectOpt(i,type){
+  if(quiz.checked)return;
+  if(type==='sata'){
+    const set=new Set(quiz.selected);
+    set.has(i)?set.delete(i):set.add(i);
+    quiz.selected=[...set];
+  } else {
+    quiz.selected=i;
+  }
+  document.querySelectorAll('#qOpts .opt').forEach(el=>{
+    const idx=+el.dataset.i;
+    const on = type==='sata' ? quiz.selected.includes(idx) : quiz.selected===idx;
+    el.classList.toggle('sel',on);
+  });
+}
+
+function checkAnswer(){
+  const it=quiz.items[quiz.idx];
+  let correct=false, given;
+
+  if(it.type==='fib'){
+    const val=(document.getElementById('fibInput').value||'').trim().toLowerCase().replace(/\s+/g,'');
+    if(!val){return;}
+    const accepts=(it.accept||[it.a]).map(x=>x.toLowerCase().replace(/\s+/g,''));
+    correct=accepts.includes(val);
+    given=val;
+    document.getElementById('fibInput').disabled=true;
+    document.getElementById('fibInput').style.borderColor=correct?'var(--correct)':'var(--wrong)';
+  } else if(it.type==='sata'){
+    if(!quiz.selected.length){return;}
+    const want=[...it.a].sort().join(',');
+    const got=[...quiz.selected].sort().join(',');
+    correct = want===got;
+    given=quiz.selected;
+    paintMC(it,quiz.selected,true);
+  } else {
+    if(quiz.selected===null){return;}
+    correct = quiz.selected===it.a;
+    given=quiz.selected;
+    paintMC(it,[quiz.selected],false);
+  }
+
+  quiz.checked=true;
+  quiz.answers.push({section:it.s, correct});
+  session.total++; if(correct)session.correct++;
+  updateStreak();
+
+  const box=document.getElementById('qExplain');
+  box.innerHTML=`<div class="explain ${correct?'ok':'no'}">
+    <div class="verdict">${correct?'✓ Correct':'✗ Not quite'}</div>
+    <div>${it.ex}</div></div>`;
+
+  document.getElementById('checkBtn').classList.add('hide');
+  document.getElementById('nextBtn').classList.remove('hide');
+  document.getElementById('qProg').style.width=((quiz.idx+1)/quiz.items.length*100)+'%';
+}
+
+function paintMC(it,selected,isSata){
+  document.querySelectorAll('#qOpts .opt').forEach(el=>{
+    const i=+el.dataset.i;
+    el.classList.add('locked');
+    el.onclick=null;
+    const isAns = isSata ? it.a.includes(i) : i===it.a;
+    if(isAns) el.classList.add('correct');
+    else if(selected.includes(i)) el.classList.add('wrong');
+    el.classList.remove('sel');
+  });
+}
+
+function nextQuestion(){
+  quiz.idx++;
+  if(quiz.idx>=quiz.items.length){ finishQuiz(); return; }
+  renderQuestion();
+}
+
+function finishQuiz(){
+  clearTimer();
+  const total=quiz.answers.length;
+  const correct=quiz.answers.filter(a=>a.correct).length;
+  const pct= total? Math.round(correct/total*100):0;
+  document.getElementById('rScore').textContent=pct+'%';
+  document.getElementById('rScore').style.color = pct>=TARGET ? 'var(--correct)' : 'var(--ink)';
+  document.getElementById('rSub').innerHTML=`${correct} of ${total} correct &nbsp;·&nbsp; <b style="color:${pct>=TARGET?'var(--correct)':'var(--terra)'}">${pct>=TARGET?'✓ at/above':'below'} ${TARGET}% target</b>`;
+
+  // per-section breakdown
+  const bySec={};
+  quiz.answers.forEach(a=>{(bySec[a.section]=bySec[a.section]||{c:0,t:0});bySec[a.section].t++;if(a.correct)bySec[a.section].c++;});
+  const colors={"Reading":"#2F6B5E","Math":"#C16A47","Science":"#3E7C5A","English & Language Usage":"#7A5C9E"};
+  let html='';
+  Object.keys(bySec).forEach(s=>{
+    const o=bySec[s], p=Math.round(o.c/o.t*100);
+    html+=`<div class="breakrow"><span class="lab">${s}</span>
+      <span class="minibar"><i style="width:${p}%;background:${colors[s]||'#2F6B5E'}"></i></span>
+      <span style="font-variant-numeric:tabular-nums;font-weight:600">${o.c}/${o.t}</span></div>`;
+  });
+  document.getElementById('rBreak').innerHTML=html;
+
+  // advice — measured against her 80% target
+  let advice, cls='ok';
+  const weak=Object.keys(bySec).filter(s=>bySec[s].c/bySec[s].t<TARGET/100);
+  const gap=TARGET-pct;
+  if(pct>=90){advice=`Outstanding — well clear of your ${TARGET}% target. Keep this up and protect your timing.`;}
+  else if(pct>=TARGET){advice=`You hit your ${TARGET}% target. That's the goal — now build margin so a tough day still clears it.`;}
+  else if(pct>=TARGET-10){advice=`Close — just ${gap} point${gap===1?'':'s'} under your ${TARGET}% target. Tighten the sections below and you're there.`;cls='no';}
+  else{advice=`You're ${gap} points under the ${TARGET}% target right now — exactly what practice is for. Focus the next sessions here, then re-test.`;cls='no';}
+  if(weak.length){advice+=` Prioritize: ${weak.join(', ')}.`;}
+  const ad=document.getElementById('rAdvice');
+  ad.className='explain '+cls; ad.style.textAlign='left';
+  ad.innerHTML=advice;
+
+  document.getElementById('retryBtn').onclick=()=>startQuiz(quiz.section, quiz.items.length, quiz.timed);
+  go('results');
+}
+
+function quitQuiz(){ clearTimer(); quiz=null; go('home'); }
+
+function updateStreak(){
+  const pct = session.total ? Math.round(session.correct/session.total*100) : 0;
+  const txt = session.total ? `Session: ${session.correct}/${session.total} (${pct}%) · target ${TARGET}%` : `Target: ${TARGET}%`;
+  document.getElementById('streakPill').textContent=txt;
+}
+
+/* ============================================================
+   REFERENCE / CHEAT SHEET
+   ============================================================ */
+document.getElementById('refContent').innerHTML=`
+<h4>Math — must-knows</h4>
+<ul>
+<li><b>Percent of a number:</b> <code>part = percent × whole</code>. 15% of 480 → <code>0.15 × 480 = 72</code>.</li>
+<li><b>Dosage proportion:</b> set up <code>dose/weight = x/weight</code> and cross-multiply. The #1 math skill on the TEAS.</li>
+<li><b>Decimal ↔ percent:</b> move the decimal two places. 0.25 = 25%; 1.5 = 150%.</li>
+<li><b>Fraction → decimal:</b> divide top by bottom. 3/4 = 0.75.</li>
+<li><b>Metric:</b> kilo=×1000, centi=÷100, milli=÷1000. 1 L = 1000 mL, 1 kg = 1000 g.</li>
+<li><b>Area:</b> rectangle <code>L×W</code>, triangle <code>½×b×h</code>, circle <code>πr²</code>. Don't confuse with perimeter.</li>
+<li><b>Mean (average):</b> add all values, divide by how many.</li>
+<li><b>Order of operations:</b> PEMDAS.</li>
+</ul>
+
+<h4>Science — Anatomy & Physiology (the largest, hardest section)</h4>
+<ul>
+<li><b>Cell powerhouse:</b> mitochondria make ATP.</li>
+<li><b>Heart flow:</b> body → right atrium → right ventricle → lungs → left atrium → <b>left ventricle</b> → body. Left ventricle is the strongest pump.</li>
+<li><b>Gas exchange:</b> happens in the <b>alveoli</b>.</li>
+<li><b>Homeostasis:</b> maintaining a stable internal state (e.g. temperature) via negative feedback.</li>
+<li><b>Body systems to know:</b> cardiovascular, respiratory, nervous, digestive, skeletal, muscular, endocrine, renal, immune.</li>
+<li><b>Macromolecules:</b> carbs (quick energy), lipids (stored energy), proteins (structure/enzymes), nucleic acids (DNA/RNA).</li>
+</ul>
+
+<h4>Science — Chemistry & Biology</h4>
+<ul>
+<li><b>pH:</b> 0–14, 7 = neutral, &lt;7 acidic, &gt;7 basic. Lower number = stronger acid.</li>
+<li><b>Atomic number</b> = number of protons (defines the element). Mass number = protons + neutrons.</li>
+<li><b>Prokaryote vs eukaryote:</b> prokaryotes (bacteria) have NO membrane-bound nucleus.</li>
+<li><b>Scientific method:</b> independent variable = what you change; dependent variable = what you measure; control = unchanged comparison group.</li>
+</ul>
+
+<h4>English & Language Usage</h4>
+<ul>
+<li><b>Their / there / they're:</b> possession / place / "they are."</li>
+<li><b>Affect / effect:</b> affect = verb (to influence); effect = noun (a result).</li>
+<li><b>Semicolon</b> joins two complete sentences; <b>comma splice</b> (joining them with just a comma) is wrong.</li>
+<li><b>Subject–verb agreement:</b> collective nouns (team, staff) are singular → "is."</li>
+<li><b>Fragment</b> = incomplete thought; <b>run-on</b> = two sentences jammed together.</li>
+<li><b>Prefixes:</b> hyper- (over), hypo- (under), -itis (inflammation), -ology (study of), brady- (slow), tachy- (fast).</li>
+</ul>`;
+
+/* ============================================================
+   STUDY PLAN
+   ============================================================ */
+document.getElementById('planContent').innerHTML=`
+<h4>A realistic 6-week plan (ATI's recommended runway)</h4>
+<ul>
+<li><b>Week 1 — Diagnose.</b> Take a timed mixed round here. Note the weakest section. Skim the Cheat Sheet daily.</li>
+<li><b>Week 2 — Science foundations.</b> It's the biggest section (50 Qs) and the hardest. Drill Anatomy & Physiology first — body systems, cells, organelles.</li>
+<li><b>Week 3 — Math fluency.</b> Fractions, percents, and dosage proportions until they're automatic. Speed matters: ~1.5 min/question.</li>
+<li><b>Week 4 — Reading & English.</b> Practice finding the main idea fast and spotting grammar errors. These are the most "coachable" points.</li>
+<li><b>Week 5 — Mixed timed rounds.</b> Simulate the real pacing. Review every miss with the AI Tutor until the "why" is obvious.</li>
+<li><b>Week 6 — Polish & rest.</b> Light review, full timed rounds, and sleep. Don't cram the night before.</li>
+</ul>
+<h4>Test-day mechanics worth knowing</h4>
+<ul>
+<li>Order is fixed: <b>Reading → Math → (10-min break) → Science → English</b>. You can't go back to a closed section.</li>
+<li>Question types now include <b>select-all-that-apply</b> (all-or-nothing scoring), <b>fill-in-the-blank</b>, ordered-response, and hot-spot — not just A/B/C/D.</li>
+<li>Within an open section you <b>can</b> change answers. Flag-and-return only works inside the active section.</li>
+<li>Pacing is tight on Reading and Science (~1.2 min/question). Don't park on one item.</li>
+</ul>
+<h4>Her target: 80%</h4>
+<ul>
+<li>The program requires <b>80%</b> — so that's the line every practice round measures against, not a generic pass mark.</li>
+<li>Aim for practice scores in the <b>mid-80s</b> consistently before test day, so a hard question or two on the real exam still leaves her clear.</li>
+<li>Double-check whether the program wants <b>80% overall</b> or <b>80% in specific sections</b> too — some set both. If it's per-section, no weak section can drag below the line.</li>
+</ul>`;
+
+/* ============================================================
+   AI TUTOR
+   ============================================================ */
+function addMsg(text, who){
+  const c=document.getElementById('chat');
+  const d=document.createElement('div');
+  d.className='msg '+who;
+  d.innerHTML=text;
+  c.appendChild(d);
+  c.scrollTop=c.scrollHeight;
+  return d;
+}
+
+async function sendChat(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  document.getElementById('sendBtn').disabled=true;
+  addMsg(text,'you');
+  chatHistory.push({role:'user',content:text});
+  const thinking=addMsg('<span class="loading">thinking</span>','bot');
+
+  const system="You are a warm, encouraging tutor helping a student prepare for the ATI TEAS 7 nursing entrance exam (sections: Reading, Math, Science incl. anatomy & physiology, and English & Language Usage). Explain clearly and simply, use short examples, and when asked to quiz, give one question at a time with the answer revealed only after. Keep replies concise and supportive. Plain text, no markdown headers.";
+
+  try{
+    const res=await fetch(AI_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:AI_MODEL, max_tokens:1000,
+        system, messages:chatHistory
+      })
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    const reply=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').trim() || "Sorry — I didn't get that. Try rephrasing?";
+    thinking.classList.remove('loading');
+    thinking.textContent=reply;
+    chatHistory.push({role:'assistant',content:reply});
+    document.getElementById('chat').scrollTop=999999;
+  }catch(e){
+    thinking.innerHTML='The AI tutor needs an API connection. In the Claude app it works automatically. If you host this file elsewhere, point <code>AI_ENDPOINT</code> at your own proxy. Meanwhile, the practice bank and cheat sheet work fully offline.';
+  }finally{
+    document.getElementById('sendBtn').disabled=false;
+    input.focus();
+  }
+}
+
+document.getElementById('tutorTip').innerHTML='Tip: try "quiz me on heart anatomy" or "explain dosage proportions step by step".';
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderSections();
+updateStreak();
+go('home');
+</script>
+</body>
+</html>
